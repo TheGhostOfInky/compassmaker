@@ -1,0 +1,48 @@
+    <!DOCTYPE html>
+    <html>
+        <head>
+            <link type="text/css" rel="stylesheet" href="dist/style.css"/>
+            <title>CompassMaker</title>
+            <link rel="icon" type="image/svg+xml" href="assets/icon.svg"/>
+            <link rel="shortcut icon" type="image/svg+xml" href="assets/icon.svg"/>
+            <meta charset="utf-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
+        </head>
+        <body>
+            <h1>CompassMaker</h1>
+            <form id="params">
+                <input type="text" name="tlcorner" id="tlcorner" value="#FF0000"/>
+                <input type="text" name="trcorner" id="trcorner" value="#FFFF00"/>
+                    <legend for="tlcorner">Top Left corner</legend>
+                    <legend for="trcorner">Top Right corner</legend>
+                <input type="text" name="blcorner" id="blcorner" value="#00FF00"/>
+                <input type="text" name="brcorner" id="brcorner" value="#00FFFF"/>
+                    <legend for="blcorner">Bottom Left corner</legend>
+                    <legend for="brcorner">Bottom Right corner</legend>
+                <input type="number" name="xaxis" id="xaxis" value="5"/>
+                <input type="number" name="yaxis" id="yaxis" value="5"/>
+                    <legend for="xaxis">Width</legend>
+                    <legend for="yaxis">Height</legend>
+                <span style="display:none">
+                <input type="radio" name="legendradio" id="legend1" value="1"/>
+                <input type="radio" name="legendradio" id="legend0" value="0" checked/>
+                    <label for="legend">Legend</label>
+                    <label for="nolegend">No Legend</label></span>
+            </form>
+            <div id="legendholder" style="display: none;">
+                <form id="params">
+                    <input type="text" name="top" id="top" value="Authoritarian"/>
+                    <input type="text" name="bottom" id="bottom" value="Libertarian"/>
+                        <legend for="tlcorner">Top</legend>
+                        <legend for="trcorner">Bottom</legend>
+                    <input type="text" name="left" id="left" value="Socialist"/>
+                    <input type="text" name="right" id="right" value="Capitalist"/>
+                        <legend for="blcorner">Left</legend>
+                        <legend for="brcorner">Right</legend>
+                </form>
+            </div>
+            <button id="renderbutton">Render</button>
+            <canvas id="compasscanvas"></canvas>
+            <script type="module" src="dist/script.js"></script>
+        </body>
+    </html>
