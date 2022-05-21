@@ -17,3 +17,17 @@ export type axis = {
     "x": number;
     "y": number
 }
+
+export type legend = {
+    "top"    : string;
+    "bottom" : string;
+    "left"   : string;
+    "right"  : string
+}
+
+export type params = {
+    "thickness" : number;
+    "size"      : number;
+    "border"    : number;
+    "bcolor"    : color
+}

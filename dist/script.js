@@ -1,43 +1,51 @@
 import { drawCanvas } from "./canvas.js";
 const drawbutton = document.getElementById("renderbutton");
-const legend1radio = document.getElementById("legend1");
-const legend0radio = document.getElementById("legend0");
-const legendholder = document.getElementById("legendholder");
 const canvas = document.getElementById("compasscanvas");
-if (legend1radio.checked) {
+const legendtoggle = document.getElementById("legend");
+const legendholder = document.getElementById("legendholder");
+if (legendtoggle.checked) {
     legendholder.style.display = "block";
 }
-legend1radio.addEventListener("click", () => legendholder.style.display = "block");
-legend0radio.addEventListener("click", () => legendholder.style.display = "none");
+legendtoggle.addEventListener("click", () => {
+    if (legendtoggle.checked) {
+        legendholder.style.display = "block";
+    }
+    else {
+        legendholder.style.display = "none";
+    }
+});
+const paramtoggle = document.getElementById("paramtg");
+const paramholder = document.getElementById("paramholder");
+if (paramtoggle.checked) {
+    paramholder.style.display = "block";
+}
+paramtoggle.addEventListener("click", () => {
+    console.log(paramtoggle.checked);
+    if (paramtoggle.checked) {
+        paramholder.style.display = "block";
+    }
+    else {
+        paramholder.style.display = "none";
+    }
+});
 drawbutton.addEventListener("click", () => buttonClick());
 function buttonClick() {
     const corners = {
-        tl: {
-            r: 0,
-            g: 0,
-            b: 0
-        },
-        tr: {
-            r: 0,
-            g: 0,
-            b: 0
-        },
-        bl: {
-            r: 0,
-            g: 0,
-            b: 0
-        },
-        br: {
-            r: 0,
-            g: 0,
-            b: 0
-        }
+        tl: {},
+        tr: {},
+        bl: {},
+        br: {}
     };
     {
         let key;
         for (key in corners) {
             const elm = document.getElementById(`${key}corner`);
-            corners[key] = hex2int(elm.value);
+            try {
+                corners[key] = hex2int(elm.value);
+            }
+            catch (e) {
+                alert(e);
+            }
         }
     }
     const axis = {
@@ -48,7 +56,12 @@ function buttonClick() {
         let key;
         for (key in axis) {
             const elm = document.getElementById(`${key}axis`);
-            axis[key] = parseInt(elm.value);
+            try {
+                axis[key] = parseInt(elm.value);
+            }
+            catch (e) {
+                alert(e);
+            }
         }
     }
     if (axis["x"] > 1 && axis["y"] > 1) {
@@ -57,6 +70,43 @@ function buttonClick() {
     else {
         alert("Invalid values, both sides must be larger than 1");
     }
+}
+function getLegend() {
+    if (!legendtoggle.checked)
+        return {
+            "top": "",
+            "bottom": "",
+            "left": "",
+            "right": ""
+        };
+    const top = document.getElementById("top");
+    const bottom = document.getElementById("bottom");
+    const left = document.getElementById("left");
+    const right = document.getElementById("right");
+    return {
+        "top": top.value,
+        "bottom": bottom.value,
+        "left": left.value,
+        "right": right.value
+    };
+}
+function getParams() {
+    const thickness_str = document.getElementById("thickness");
+    const size_str = document.getElementById("size");
+    const border_str = document.getElementById("border");
+    const bcolor = document.getElementById("bcolor");
+    const color = hex2int(bcolor.value);
+    const thickness = parseInt(thickness_str.value);
+    const size = parseInt(size_str.value);
+    const border = parseInt(border_str.value);
+    if (thickness < 1 || size < 25 || border < 0)
+        throw new Error("Invalid parameters");
+    return {
+        "thickness": thickness,
+        "size": size,
+        "border": border,
+        "bcolor": color
+    };
 }
 function calcCompass(corners, axis) {
     const matrix = new Array(axis.y).fill(0).map(() => new Array(axis.x).fill(0));
@@ -67,7 +117,17 @@ function calcCompass(corners, axis) {
             matrix[i][j] = calcColor(corners, i, j, W, H);
         }
     }
-    drawCanvas(canvas, matrix);
+    try {
+        const params = getParams();
+        const legend = getLegend();
+        drawCanvas(canvas, matrix, legend, params);
+        canvas.style.display = "block";
+    }
+    catch (e) {
+        canvas.style.display = "none";
+        console.error(e);
+        alert(e);
+    }
 }
 function hex2int(value) {
     const color = {
@@ -96,8 +156,9 @@ function hex2int(value) {
         }
     }
     else {
-        throw new Error("number not valid hex");
+        throw new Error(`#${value} is not a valid color hex`);
     }
+    console.log(color);
     return color;
 }
 function calcRatio(val, total) {

@@ -1,90 +1,119 @@
 html {
-    color: #fff;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #fff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 body {
-    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-	background-size: 400% 400%;
-	animation: gradient 15s ease infinite;
-    color: #fff;
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+  color: #fff;
 }
 
 h1 {
-    text-align: center;
-    font-size: 54px;
+  text-align: center;
+  font-size: 54px;
 }
 
 #params {
-    margin-top: 30px;
-    display: grid;
-    grid-template-columns: auto auto;
-    max-width: 30vw;
-    margin: 0 auto;
+  margin-top: 30px;
+  display: grid;
+  grid-template-columns: auto auto;
+  max-width: 30vw;
+  margin: 0 auto;
 }
 
 input {
-    margin: 10px;
-    margin-bottom: 0px;
-    text-align: center;
-    border-radius: 16pt;
-    border: none;
-    padding: 5px;
-    background: linear-gradient(90deg, #FF0000 0%, #FFFF00 33%, #00FF00 67%, #00FFFF 100%);
+  margin: 10px;
+  margin-bottom: 0px;
+  text-align: center;
+  border-radius: 16pt;
+  border: none;
+  padding: 5px;
+  background: linear-gradient(
+    90deg,
+    #ff0000 0%,
+    #ffff00 33%,
+    #00ff00 67%,
+    #00ffff 100%
+  );
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+  &:hover {
+    background: linear-gradient(
+      90deg,
+      #bb0000 0%,
+      #bbbb00 33%,
+      #00bb00 67%,
+      #00bbbb 100%
+    );
     background-size: 400% 400%;
-	animation: gradient 15s ease infinite;
-    &:hover {
-        background: linear-gradient(90deg, #BB0000 0%, #BBBB00 33%, #00BB00 67%, #00BBBB 100%);
-        background-size: 400% 400%;
-        animation: gradient 15s ease infinite;
-        color: #DDD;
-    }
+    animation: gradient 15s ease infinite;
+    color: #ddd;
+  }
 }
 
-legend, label {
-    text-align: center;
-    margin-bottom: 10px;
+legend,
+label {
+  text-align: center;
+  margin-bottom: 10px;
 }
 
 canvas {
-    margin: auto;
-    display: block;
-    width: 70%;
-    height: auto;
+  margin: auto;
+  display: block;
+  width: 70%;
+  height: auto;
 }
 
 button {
-    display: block;
-    background: linear-gradient(90deg, #FF0000 0%, #FFFF00 33%, #00FF00 67%, #00FFFF 100%);
-    border: none;
-    border-radius: 20pt;
-    color: #444;
-    padding: 8px;
-    padding-left: 30px;
-    padding-right: 30px;
-    text-align: center;
-    text-decoration: none;
-    display: block;
-    font-size: 16pt;
-    margin: 10px auto;
-    cursor: pointer;
+  display: block;
+  background: linear-gradient(
+    90deg,
+    #ff0000 0%,
+    #ffff00 33%,
+    #00ff00 67%,
+    #00ffff 100%
+  );
+  border: none;
+  border-radius: 20pt;
+  color: #444;
+  padding: 8px;
+  padding-left: 30px;
+  padding-right: 30px;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  font-size: 16pt;
+  margin: 10px auto;
+  cursor: pointer;
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+  &:hover {
+    background: linear-gradient(
+      90deg,
+      #bb0000 0%,
+      #bbbb00 33%,
+      #00bb00 67%,
+      #00bbbb 100%
+    );
     background-size: 400% 400%;
-	animation: gradient 15s ease infinite;
-    &:hover {
-        background: linear-gradient(90deg, #BB0000 0%, #BBBB00 33%, #00BB00 67%, #00BBBB 100%);
-        background-size: 400% 400%;
-        animation: gradient 15s ease infinite;
-        color: #DDD;
-    }
+    animation: gradient 15s ease infinite;
+    color: #ddd;
+  }
+}
+
+.switchbox {
+  text-align: center;
 }
 
 @keyframes gradient {
-	0% {
-		background-position: 0% 50%;
-	}
-	50% {
-		background-position: 100% 50%;
-	}
-	100% {
-		background-position: 0% 50%;
-	}
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }

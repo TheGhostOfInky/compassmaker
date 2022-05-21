@@ -26,15 +26,15 @@ input {
   border-radius: 16pt;
   border: none;
   padding: 5px;
-  background: linear-gradient(90deg, #FF0000 0%, #FFFF00 33%, #00FF00 67%, #00FFFF 100%);
+  background: linear-gradient(90deg, #ff0000 0%, #ffff00 33%, #00ff00 67%, #00ffff 100%);
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
 }
 input:hover {
-  background: linear-gradient(90deg, #BB0000 0%, #BBBB00 33%, #00BB00 67%, #00BBBB 100%);
+  background: linear-gradient(90deg, #bb0000 0%, #bbbb00 33%, #00bb00 67%, #00bbbb 100%);
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
-  color: #DDD;
+  color: #ddd;
 }
 legend,
 label {
@@ -48,7 +48,7 @@ canvas {
   height: auto;
 }
 button {
-  background: linear-gradient(90deg, #FF0000 0%, #FFFF00 33%, #00FF00 67%, #00FFFF 100%);
+  background: linear-gradient(90deg, #ff0000 0%, #ffff00 33%, #00ff00 67%, #00ffff 100%);
   border: none;
   border-radius: 20pt;
   color: #444;
@@ -65,10 +65,13 @@ button {
   animation: gradient 15s ease infinite;
 }
 button:hover {
-  background: linear-gradient(90deg, #BB0000 0%, #BBBB00 33%, #00BB00 67%, #00BBBB 100%);
+  background: linear-gradient(90deg, #bb0000 0%, #bbbb00 33%, #00bb00 67%, #00bbbb 100%);
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
-  color: #DDD;
+  color: #ddd;
+}
+.switchbox {
+  text-align: center;
 }
 @keyframes gradient {
   0% {

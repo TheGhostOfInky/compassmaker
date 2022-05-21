@@ -23,22 +23,39 @@
                 <input type="number" name="yaxis" id="yaxis" value="5"/>
                     <legend for="xaxis">Width</legend>
                     <legend for="yaxis">Height</legend>
-                <span style="display:none">
-                <input type="radio" name="legendradio" id="legend1" value="1"/>
-                <input type="radio" name="legendradio" id="legend0" value="0" checked/>
-                    <label for="legend">Legend</label>
-                    <label for="nolegend">No Legend</label></span>
+                <div class="switchbox">
+                    <label for="legend">Labels</label><br>
+                    <input type="checkbox" name="legend" id="legend">
+                    <span class="slider"></span>
+                </div>
+                <div class="switchbox">
+                    <label for="paramtg">Parameters</label><br>
+                    <input type="checkbox" name="paramtg" id="paramtg">
+                    <span class="slider"></span>
+                </div>
             </form>
             <div id="legendholder" style="display: none;">
                 <form id="params">
-                    <input type="text" name="top" id="top" value="Authoritarian"/>
-                    <input type="text" name="bottom" id="bottom" value="Libertarian"/>
-                        <legend for="tlcorner">Top</legend>
-                        <legend for="trcorner">Bottom</legend>
-                    <input type="text" name="left" id="left" value="Socialist"/>
-                    <input type="text" name="right" id="right" value="Capitalist"/>
-                        <legend for="blcorner">Left</legend>
-                        <legend for="brcorner">Right</legend>
+                    <input type="text" name="top" id="top" value="Top"/>
+                    <input type="text" name="bottom" id="bottom" value="Bottom"/>
+                        <legend for="top">Top label</legend>
+                        <legend for="bottom">Bottom label</legend>
+                    <input type="text" name="left" id="left" value="Left"/>
+                    <input type="text" name="right" id="right" value="Right"/>
+                        <legend for="left">Left label</legend>
+                        <legend for="right">Right label</legend>
+                </form>
+            </div>
+            <div id="paramholder"  style="display: none;">
+                <form id="params">
+                    <input type="number" name="thickness" id="thickness" value="10"/>
+                    <input type="number" name="size" id="size" value="200"/>
+                        <legend for="thickness">Line Thickness</legend>
+                        <legend for="size">Square Size</legend>
+                    <input type="number" name="border" id="border" value="60"/>
+                    <input type="text" name="bcolor" id="bcolor" value="#000"/>
+                        <legend for="border">Border Size</legend>
+                        <legend for="bcolor">Border Color</legend>
                 </form>
             </div>
             <button id="renderbutton">Render</button>

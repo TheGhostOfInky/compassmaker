@@ -1,51 +1,62 @@
 import { drawCanvas } from "./canvas.js"
-import type { color, matrix, corners, axis} from "./types"
+import type { color, matrix, corners, axis, params, legend } from "./types"
 const drawbutton = <HTMLButtonElement> document.getElementById("renderbutton")
-const legend1radio = <HTMLInputElement> document.getElementById("legend1")
-const legend0radio = <HTMLInputElement> document.getElementById("legend0")
-const legendholder = <HTMLDivElement> document.getElementById("legendholder")
 const canvas = <HTMLCanvasElement> document.getElementById("compasscanvas")
-if(legend1radio.checked){
+
+const legendtoggle = <HTMLInputElement> document.getElementById("legend")
+const legendholder = <HTMLDivElement> document.getElementById("legendholder")
+
+if(legendtoggle.checked){
     legendholder.style.display = "block"
 }
-legend1radio.addEventListener("click", () => legendholder.style.display = "block" )
-legend0radio.addEventListener("click", () => legendholder.style.display = "none" )
+legendtoggle.addEventListener("click", () => {
+    if(legendtoggle.checked){
+        legendholder.style.display = "block"
+    } else {
+        legendholder.style.display = "none" 
+    }
+})
+
+const paramtoggle = <HTMLInputElement> document.getElementById("paramtg")
+const paramholder = <HTMLDivElement> document.getElementById("paramholder")
+
+if(paramtoggle.checked){
+    paramholder.style.display = "block"
+}
+paramtoggle.addEventListener("click", () => {
+    console.log(paramtoggle.checked)
+    if(paramtoggle.checked){
+        paramholder.style.display = "block"
+    } else {
+        paramholder.style.display = "none" 
+    }
+})
+
+
 drawbutton.addEventListener("click", () => buttonClick() )
 
 function buttonClick(): void{
     const corners: corners = {
-        tl : {
-            r : 0,
-            g : 0,
-            b : 0
-        },
-        tr : {
-            r : 0,
-            g : 0,
-            b : 0
-        },
-        bl : {
-            r : 0,
-            g : 0,
-            b : 0
-        },
-        br : {
-            r : 0,
-            g : 0,
-            b : 0
-        }
+        tl : {} as color,
+        tr : {} as color,
+        bl : {} as color,
+        br : {} as color
     }
     {   
-        interface color {
+        interface corners {
             tl: string,
             tr: string,
             bl: string,
             br: string
         }
-        let key: keyof color
+        let key: keyof corners
         for(key in corners){
             const elm = <HTMLInputElement> document.getElementById(`${key}corner`)
-            corners[key] = hex2int(elm.value)
+            try {
+                corners[key] = hex2int(elm.value)
+            } catch(e:any) {
+                alert(e)
+            } 
         }
     }
     const axis: axis = {
@@ -58,20 +69,63 @@ function buttonClick(): void{
             y: number,
         }
         let key: keyof axis
-        for(key in axis){
+        for (key in axis) {
             const elm = <HTMLInputElement> document.getElementById(`${key}axis`)
-            axis[key] = parseInt(elm.value)
+            try {
+                axis[key] = parseInt(elm.value)
+            } catch(e:any) {
+                alert(e)
+            }
         }
     }
-    if(axis["x"]>1 && axis["y"]>1){
+
+    if(axis["x"]>1 && axis["y"]>1) {
         calcCompass(corners,axis)
-    } else  {
+    } else {
         alert("Invalid values, both sides must be larger than 1")
     }
-    
 }
 
-function calcCompass(corners:any,axis:any): void{
+function getLegend(): legend {
+    if(!legendtoggle.checked)
+        return {
+            "top"    : "",
+            "bottom" : "",
+            "left"   : "",
+            "right"  : ""
+        }
+    const top    = <HTMLInputElement> document.getElementById("top")
+    const bottom = <HTMLInputElement> document.getElementById("bottom")
+    const left   = <HTMLInputElement> document.getElementById("left")
+    const right  = <HTMLInputElement> document.getElementById("right")
+    return {
+        "top"    : top.value,
+        "bottom" : bottom.value,
+        "left"   : left.value,
+        "right"  : right.value
+    }
+}
+
+function getParams(): params {
+    const thickness_str = <HTMLInputElement> document.getElementById("thickness")
+    const size_str      = <HTMLInputElement> document.getElementById("size")
+    const border_str    = <HTMLInputElement> document.getElementById("border")
+    const bcolor        = <HTMLInputElement> document.getElementById("bcolor")
+    const color: color      = hex2int(bcolor.value)
+    const thickness: number = parseInt(thickness_str.value)
+    const size: number      = parseInt(size_str.value)
+    const border: number    = parseInt(border_str.value)
+    if( thickness < 1 || size < 25 || border < 0)
+        throw new Error("Invalid parameters")
+    return {
+        "thickness" : thickness,
+        "size"      : size,
+        "border"    : border,
+        "bcolor"    : color
+    }
+}
+
+function calcCompass(corners:any,axis:any): void {
     const matrix: matrix = new Array(axis.y).fill(0).map( () => new Array(axis.x).fill(0) )
     const W: number = matrix.length
     const H: number = matrix[0].length
@@ -80,7 +134,16 @@ function calcCompass(corners:any,axis:any): void{
             matrix[i][j] = calcColor(corners, i, j, W, H)
         }
     }
-    drawCanvas(canvas, matrix)
+    try {
+        const params: params = getParams()
+        const legend: legend = getLegend()
+        drawCanvas(canvas, matrix, legend, params)
+        canvas.style.display = "block"
+    } catch (e:any) {
+        canvas.style.display = "none"
+        console.error(e)
+        alert(e)
+    }
 }
 
 function hex2int(value:string): color{
@@ -94,27 +157,28 @@ function hex2int(value:string): color{
         g : 0,
         b : 0,
     }
-    if(value.substring(0,1) == "#"){
+    if(value.substring(0,1) == "#") {
         value = value.substring(1)
     }
-    if(value.length==3){
+    if(value.length==3) {
         let key: keyof color
         let i: number = 0
-        for(key in color){
-            const v = value.substring(i,i+1)
+        for(key in color) {
+            const v: string = value.substring(i,i+1)
             color[key] = parseInt(v+v, 16)
             i++
         }
     } else if (value.length==6) {
         let key: keyof color
         let i: number = 0
-        for(key in color){
-            color[key]= parseInt(value.substring(2*i,2*(i+1)), 16)
+        for(key in color) {
+            color[key] = parseInt(value.substring(2*i,2*(i+1)), 16)
             i++
         }
     } else {
-        throw new Error("number not valid hex")
+        throw new Error(`#${value} is not a valid color hex`)
     }
+    console.log(color)
     return color
 }
 
